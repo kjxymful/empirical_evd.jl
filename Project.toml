@@ -3,6 +3,15 @@ uuid = "63e610d7-d8dc-4937-8cb5-948dc84e3227"
 authors = ["your-name"]
 version = "0.1.0"
 
+[deps]
+BPTT = "84beb053-a066-4ae9-8af9-707f5e1c390b"
+BSON = "fbb218c0-5317-5bc6-957e-2ee96dd4b1f0"
+DynamicalSystems = "61744808-ddfa-5f27-97ff-6e42cc95d634"
+Flux = "587475ba-b771-5e3f-ad9e-33799f191a9c"
+JLD2 = "033835bb-8acc-5ee8-8aae-3f567f8a3819"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+NPZ = "15e1cf62-19b3-5cfa-8e77-841668bca605"
+
 [compat]
 julia = "1"
 
