@@ -2,12 +2,20 @@ using DynamicalSystems
 using JLD2: save
 using BPTT: Dataset as dataset
 
-function create_series(exp::String, μ;u0=[0.0,10.0,0.0], Δt=0.01, num_t=100000, start_up=200)
+function create_series(exp::String, μ;u0=[], Δt=0.01, num_t=100000, start_up=200)
     T_end = num_t*Δt
     if exp == "lorenz"
-        ds = Systems.lorenz(u0, ρ=μ)
+        if isempty(u0)
+            ds = Systems.lorenz(; ρ=μ)
+        else
+            ds = Systems.lorenz(u0; ρ=μ)
+        end
     elseif exp == "bursting_neuron"
-        print("NOT IMPLEMENTED YET")
+        if isempty(u0)
+            ds = Systems.hodgkinhuxley(;I = μ)
+        else
+            ds = Systems.hodgkinhuxley(u0; I = μ)
+        end
     else
         throw(ArgumentError("$exp not a valid experiment"))
     end
@@ -40,9 +48,9 @@ end
 
 function gen_bif_pars(exp::String)::Vector
     if exp == "lorenz"
-        μs = [25 + i for i in 0:1]
+        μs = [22 + i for i in 0:7]
     elseif exp == "bursting_neuron"
-        println("NOT IMPLEMENTED")
+        μs = [-5 + i for i in 0:17]
     else
         throw(ArgumentError("no data generation possible for experiment: $exp"))
     end
