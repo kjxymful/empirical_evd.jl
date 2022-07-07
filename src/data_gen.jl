@@ -1,27 +1,35 @@
 using DynamicalSystems
 using JLD2: save
 using BPTT: Dataset as dataset
+using StatsBase
 
-function create_series(exp::String, μ;u0=[], Δt=0.01, num_t=100000, start_up=2000)
+function create_series(exp::String, μ;u0=[], Δt=0.01, num_t=100000, start_up=2000, std=true)
     T_end = num_t*Δt
+
     if exp == "lorenz"
         if isempty(u0)
             ds = Systems.lorenz(; ρ=μ)
         else
             ds = Systems.lorenz(u0; ρ=μ)
         end
+
     elseif exp == "bursting_neuron"
         if isempty(u0)
             ds = bursting_neuron(gₙₘ₀ₐ = μ)
         else
             ds = bursting_neuron(u0=u0, gₙₘ₀ₐ=μ)
         end
+
     else
         throw(ArgumentError("$exp not a valid experiment"))
     end
 
     ts = trajectory(ds, T_end; Δt=Δt, Ttr=start_up)
-    return Matrix(ts)
+    ts = Matrix(ts)
+    if std
+        ts = StatsBase.standardize(ZScoreTransform, ts, dims=1)
+    end
+    return ts
 end
 
 function save_series(ts::AbstractMatrix,save_rep::String, save_file::String; opt_info=[])
@@ -48,7 +56,7 @@ end
 
 function gen_bif_pars(exp::String)::Vector
     if exp == "lorenz"
-        μs = [22 + i for i in 0:7]
+        μs = [28]#[22 + i for i in 0:7]
     elseif exp == "bursting_neuron"
         μs = [3.0+2*i for i in 0:3]
         push!(μs, 2.0)
