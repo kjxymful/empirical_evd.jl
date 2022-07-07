@@ -1,7 +1,6 @@
 using DynamicalSystems
-"""
-Rhs for the bursting neuron model by Durstewitz 2009
-"""
+
+# rhs for the bursting neuron model by Durstewitz 2009
 @inline @inbounds function loop_burstn(u, p, t)
     I = p[1]
     Cₘ = p[2]

@@ -1,7 +1,6 @@
 using DynamicalSystems
 using JLD2: save
 using BPTT: Dataset as dataset
-using empirical_evd: bursting_neuron
 
 function create_series(exp::String, μ;u0=[], Δt=0.01, num_t=100000, start_up=2000)
     T_end = num_t*Δt
@@ -51,8 +50,8 @@ function gen_bif_pars(exp::String)::Vector
     if exp == "lorenz"
         μs = [22 + i for i in 0:7]
     elseif exp == "bursting_neuron"
-        μs = [3+2*i for i in 0:3]
-        push!(μs, 2)
+        μs = [3.0+2*i for i in 0:3]
+        push!(μs, 2.0)
         push!(μs, 10.2)
     else
         throw(ArgumentError("no data generation possible for experiment: $exp"))

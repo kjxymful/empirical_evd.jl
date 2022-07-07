@@ -3,6 +3,7 @@
 *.bson
 *.jld2
 /data
+/Results
 
 #vscode
 .vscode
