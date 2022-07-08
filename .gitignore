@@ -4,6 +4,7 @@
 *.jld2
 /data
 /Results
+/Figures
 
 #vscode
 .vscode
