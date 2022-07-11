@@ -28,5 +28,5 @@ function load_data(path::String, name::String; device=cpu)
         par = nothing
     end
 
-    return BPTT.Dataset(X, name), par
+    return BPTT.Dataset(X, name)
 end

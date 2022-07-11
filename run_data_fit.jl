@@ -5,9 +5,8 @@ using JLD2
 using Flux
 using Base.Threads: @threads
 ENV["GKSwstype"] = "nul"
-# using Debugger
-
-const gen_data = true
+# using Debugge
+BPTT.load_dataset(path::String, name::String; device=cpu) = load_data(path, name;device)
 
 function main()
     # parse args
@@ -25,21 +24,8 @@ function main()
         args["teacher_forcing_interval"] = 5
     end
 
-    println("Parsed args:")
-    for (arg, val) in args
-        println("  $arg  --->  $val")
-    end
-
-    # run number
-    run = args["run"]
-    println("RUN $run")
-
-    # num threads
-    n_threads = Threads.nthreads()
-    println("Running on $n_threads Thread(s)")
-
     # data
-    if gen_data
+    if !isdir("data/$experiment")
         println("Generating Data")
         μs = gen_bif_pars(experiment)
         for μ in μs
@@ -52,22 +38,40 @@ function main()
     end
 
     dir_path, _ = gen_path(experiment, 0)
-    data_files = readdir(dir_path)
 
-    @threads for exp_file in data_files
-        println("Fitting PlRNN, $exp_file on Thread $(Threads.threadid())")
-        path_to_data = dir_path * "/" * exp_file
-        D, par = load_data(path_to_data, "DATA", device=cpu)
+    if args["path_to_data"] == "example_data/lorenz.npy"
+        data_files = readdir(dir_path)
 
-        # model
-        plrnn = initialize_model(args, D)
+        for exp_file in data_files
+            println("Fitting PlRNN, $exp_file on Thread $(Threads.threadid())")
+            path_to_data = dir_path * "/" * exp_file
 
-        # optimizer
-        opt = initialize_optimizer(args)
+            n_threads = Threads.nthreads()
+            println("Running on $n_threads Thread(s)")
 
-        # create directories for saving ProgressMeter    # saving stuff here
-        save_path = create_folder_structure(experiment * "_$par", run)
-        train_!(plrnn, D, opt, args, save_path)
+            # get computing device
+            device = get_device(args)
+
+            # data
+            D = load_dataset(path_to_data, "DATA", device=device)
+
+            # model
+            plrnn = initialize_model(args, D) |> device
+
+            # optimizer
+            opt = initialize_optimizer(args)
+
+            # create directories
+            save_path = create_folder_structure(args["experiment"], args["name"], args["run"])
+
+            # store hypers
+            store_hypers(args, save_path)
+
+            train_!(plrnn, D, opt, args, save_path)
+        end
+    else
+        args["path_to_data"] = dir_path*"/"*args["path_to_data"]# in my case only give filename
+        main_routine(args)
     end
 end
 

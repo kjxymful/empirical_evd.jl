@@ -1,4 +1,5 @@
 using DynamicalSystems
+# using NPZ
 using JLD2: save
 using BPTT: Dataset as dataset
 using StatsBase
@@ -41,7 +42,8 @@ function save_series(ts::AbstractMatrix,save_rep::String, save_file::String; opt
         end
     end
     mkpath(save_rep)
-    save(save_path, save_dict)
+    save(save_path, save_dict) # if my own dataloader again
+    # npzwrite(save_path, ts)
     return save_path
 end
 
