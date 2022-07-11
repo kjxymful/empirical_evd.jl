@@ -1,7 +1,6 @@
 using BSON: @load
 import JLD2: load as jld2load
 using BPTT
-using YAActL
 
 function load_model(exp::String, run::Int, epoch::Int; eval=true)::BPTT.AbstractPLRNN
     load_path = joinpath(["Results", exp, format_run_ID(run)])
