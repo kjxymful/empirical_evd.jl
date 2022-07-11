@@ -56,9 +56,9 @@ end
 
 function gen_bif_pars(exp::String)::Vector
     if exp == "lorenz"
-        μs = [28]#[22 + i for i in 0:7]
+        μs = [20, 22, 24, 25, 28, 34]
     elseif exp == "bursting_neuron"
-        μs = [3.0+2*i for i in 0:3]
+        μs = [3.0 + 2 * i for i in 0:3]
         push!(μs, 2.0)
         push!(μs, 10.2)
     else

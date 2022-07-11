@@ -1,0 +1,1 @@
+julia -t 5 --project=.. ../run_data_fit.jl --experiment lorenz

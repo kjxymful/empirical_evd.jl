@@ -2,9 +2,10 @@
 *.png
 *.bson
 *.jld2
-/data
-/Results
-/Figures
+*/data
+*/Results
+*/bursting_neuron
+*/lorenz
 
 #vscode
 .vscode
