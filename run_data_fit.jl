@@ -70,6 +70,7 @@ function main()
             train_!(plrnn, D, opt, args, save_path)
         end
     else
+        println("Fitting PlRNN, $(args["path_to_data"]) on Thread $(Threads.threadid())")
         args["path_to_data"] = dir_path*"/"*args["path_to_data"]# in my case only give filename
         main_routine(args)
     end
