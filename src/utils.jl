@@ -2,8 +2,8 @@ using BSON: @load
 import JLD2: load as jld2load
 using BPTT
 
-function load_model(exp::String, run::Int, epoch::Int; eval=true)::BPTT.AbstractPLRNN
-    load_path = joinpath(["Results", exp, format_run_ID(run)])
+function load_model(exp::String, name::String, run::Int, epoch::Int; eval=true)::BPTT.AbstractPLRNN
+    load_path = joinpath(["Results", exp, name, format_run_ID(run)])
     if eval
         load_path = "../" * load_path
     end
@@ -28,5 +28,5 @@ function load_data(path::String, name::String; device=cpu)
         par = nothing
     end
 
-    return BPTT.Dataset(X, name)
+    return BPTT.Dataset(X, name), par
 end

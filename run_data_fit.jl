@@ -45,34 +45,15 @@ function main()
         for exp_file in data_files
             println("Fitting PlRNN, $exp_file on Thread $(Threads.threadid())")
             path_to_data = dir_path * "/" * exp_file
+            args["path_to_data"] = path_to_data
 
-            n_threads = Threads.nthreads()
-            println("Running on $n_threads Thread(s)")
-
-            # get computing device
-            device = get_device(args)
-
-            # data
-            D = load_dataset(path_to_data, "DATA", device=device)
-
-            # model
-            plrnn = initialize_model(args, D) |> device
-
-            # optimizer
-            opt = initialize_optimizer(args)
-
-            # create directories
-            save_path = create_folder_structure(args["experiment"], args["name"], args["run"])
-
-            # store hypers
-            store_hypers(args, save_path)
-
-            train_!(plrnn, D, opt, args, save_path)
+            bptt_routine(args)
         end
     else
         println("Fitting PlRNN, $(args["path_to_data"]) on Thread $(Threads.threadid())")
         args["path_to_data"] = dir_path*"/"*args["path_to_data"]# in my case only give filename
-        main_routine(args)
+        
+        bptt_routine(args)
     end
 end
 

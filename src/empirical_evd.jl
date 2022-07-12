@@ -11,4 +11,7 @@ export bursting_neuron
 include("data_gen.jl")
 export create_series, gen_path, save_series, gen_bif_pars
 
+include("bptt.jl")
+export bptt_routine
+
 end # module
