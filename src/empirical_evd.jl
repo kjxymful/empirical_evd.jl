@@ -3,7 +3,7 @@ module empirical_evd
 # using Debugger
 
 include("utils.jl")
-export load_model, load_data
+export load_model, load_data, load_result_path
 
 include("ds_models.jl")
 export bursting_neuron

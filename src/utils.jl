@@ -30,3 +30,12 @@ function load_data(path::String, name::String; device=cpu)
 
     return BPTT.Dataset(X, name), par
 end
+
+function load_result_path(exp::String, epoch, run; eval=true)
+    run = format_run_ID(run)
+    path = "Results/" * exp * "/evd/$run/checkpoints/" * "model_$epoch.bson"
+    if eval
+        path = "../" * path
+    end
+    return path
+end
