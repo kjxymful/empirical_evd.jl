@@ -20,8 +20,10 @@ function main()
         args["latent_dim"] = 15
         args["teacher_forcing_interval"] = 10
     elseif experiment == "bursting_neuron"
-        args["latent_dim"] = 26
-        args["teacher_forcing_interval"] = 5
+        if args["latent_dim"] ==10
+            args["latent_dim"] = 26
+        end
+        args["teacher_forcing_interval"] = 10
     end
 
     # data

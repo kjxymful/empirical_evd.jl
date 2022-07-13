@@ -4,7 +4,7 @@ using JLD2: save
 using BPTT: Dataset as dataset
 using StatsBase
 
-function create_series(exp::String, μ;u0=[], Δt=0.01, num_t=100000, start_up=2000, std=true)
+function create_series(exp::String, μ;u0=[], Δt=0.3, num_t=100000, start_up=2000, std=true)
     T_end = num_t*Δt
 
     if exp == "lorenz"
