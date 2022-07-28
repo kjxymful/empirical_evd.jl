@@ -259,3 +259,8 @@ end
     savefig(hist_abs_p, "../Figures/bursting_neuron_all/overall_change_abs_val_p.png")
     savefig(hist_abs, "../Figures/bursting_neuron_all/overall_change_abs_val.png")
 end
+
+# for debugging reasons
+if !occursing("eval",pwd())
+    cd("eval")
+end

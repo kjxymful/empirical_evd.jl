@@ -55,7 +55,7 @@ function bursting_all()
 
     # loop over part of the possible values
 for (d_part, Ds) in enumerate(partition_Ds)
-    if d_part == 10
+    if d_part == 5
         break
     end
     @show d_part
@@ -261,6 +261,8 @@ end
 end
 
 # for debugging reasons
-if !occursing("eval",pwd())
+if !occursin("Figures",pwd())
     cd("eval")
 end
+
+# bursting_all()
