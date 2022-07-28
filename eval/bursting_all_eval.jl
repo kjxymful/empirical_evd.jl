@@ -7,7 +7,7 @@ using Measures
 using SplitApplyCombine
 using StatsBase
 
-function main()
+function bursting_all()
     bins = 20
     system = "bursting_neuron"
     dir = "../Figures/$(system)_all"
@@ -258,9 +258,4 @@ end
 
     savefig(hist_abs_p, "../Figures/bursting_neuron_all/overall_change_abs_val_p.png")
     savefig(hist_abs, "../Figures/bursting_neuron_all/overall_change_abs_val.png")
-end
-
-# for debugging reasons
-if pwd() != "/home/patrick/.julia/dev/empirical_evd/eval"
-    cd("eval")
 end
